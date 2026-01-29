@@ -1,0 +1,9 @@
+﻿-- Create the table
+CREATE TABLE PolicyExcludedList (
+    Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    ProductCode NVARCHAR(100) NOT NULL
+);
+
+-- Insert a row
+INSERT INTO PolicyExcludedList (Id, ProductCode)
+VALUES (NEWID(), 'MRT');

@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aia-cms-api-deployment
+spec:
+  replicas: 1  # You can adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: aia-cms-api
+  template:
+    metadata:
+      labels:
+        app: aia-cms-api
+    spec:
+      securityContext:
+        runAsNonRoot: true  # Pod must not run as root
+        runAsUser: 1001     # Run pod as non-root UID 1001
+      containers:
+        - name: aia-cms-api
+          image: acrmm01seanshared01.azurecr.io/aiaplus_cms_api:14012026_101735
+          ports:
+            - containerPort: 8080
+          securityContext:
+            readOnlyRootFilesystem: true     # Makes root filesystem read-only
+            allowPrivilegeEscalation: false  # No privilege escalation
+            privileged: false                # Ensure it doesn't run in privileged mode
+            capabilities:
+              drop:
+                - ALL
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Uat"
+          volumeMounts:
+          - mountPath: "/app/wwwroot/images"
+            name: volume
+          - mountPath: "/tmp"
+            name: tmp-dir
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: aiaplus-uat-azure-file-pvc
+      - name: tmp-dir
+        emptyDir: {}
+---
+# pod.yml
+# apiVersion: v1
+# kind: Pod
+# metadata:
+  # name: aia-cms-api
+  # labels:
+    # app: aia-cms-api
+# spec:
+  # containers:
+    # - image: acrmm01seanshared01.azurecr.io/aiaplus_cms_api:14012026_101735
+      # name: aia-cms-api
+      # ports:
+        # - containerPort: 80
+      # env:
+        # - name: ASPNETCORE_ENVIRONMENT
+          # value: "Uat"
+---
+# service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: aia-cms-api
+  name: aia-cms-api
+  namespace: nsp-mm-u-aiaplus01
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: aia-cms-api
+  type: ClusterIP

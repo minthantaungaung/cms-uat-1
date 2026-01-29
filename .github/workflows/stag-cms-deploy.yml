@@ -1,0 +1,91 @@
+name: Stag CMS API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}  # Create this secret in your GitHub repository
+
+
+      # Use kubelogin to configure your kubeconfig for Azure auth
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.0.25'
+
+      - name: Login to Azure Container Registry
+        run: az acr login --name aiaplusstagingcodigo --username aiaplusstagingcodigo --password ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t aiaplusstagingcodigo.azurecr.io/aia_cms_api:${{ github.sha }} -f cms_api/Dockerfile . 
+          docker push aiaplusstagingcodigo.azurecr.io/aia_cms_api:${{ github.sha }}
+
+      - name: Replace image tag in deployment YAML
+        run: |
+          sed -i "s/\$TAG/${{ github.sha }}/g" yaml/Development/cms_api.yml
+
+      - name: Deploy to AKS
+        run: |
+          az aks get-credentials --resource-group aia-plus-staging --name aia-plus-stag-cluster-two
+          kubectl apply -f yaml/Development/cms_api.yml
+      
+      # Add a step to send Slack message on success
+      - name: Send Slack message on success
+        if: success()
+        run: |
+          SLACK_WEBHOOK_URL=${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_USERNAME=${{ github.actor }}
+          BRANCH_NAME=${{ github.ref }}
+          COMMIT_MESSAGES=$(git log --pretty=format:"%h - %s by %an" -n 5)
+          
+          MESSAGE="{
+            \"channel\": \"#aia-myanmar\",
+            \"blocks\": [
+              {
+                \"type\": \"section\",
+                \"text\": {
+                  \"type\": \"mrkdwn\",
+                  \"text\": \"*Staging CMS API Deployment Succeeded for the following commits* :tada: :white_check_mark:\n\n$COMMIT_MESSAGES\nBranch : $BRANCH_NAME\nTriggered by: @$GITHUB_USERNAME\"
+                }
+              }
+            ]
+          }"
+
+          curl -X POST -H 'Content-type: application/json' --data "$MESSAGE" "$SLACK_WEBHOOK_URL"
+
+      # Add a step to send Slack message on failure
+      - name: Send Slack message on failure
+        if: failure()
+        run: |
+          SLACK_WEBHOOK_URL=${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_USERNAME=${{ github.actor }}
+          BRANCH_NAME=${{ github.ref }}
+          COMMIT_MESSAGES=$(git log --pretty=format:"%h - %s by %an" -n 5)
+          
+          MESSAGE="{
+            \"channel\": \"#aia-myanmar\",
+            \"blocks\": [
+              {
+                \"type\": \"section\",
+                \"text\": {
+                  \"type\": \"mrkdwn\",
+                  \"text\": \"*Staging CMS API Deployment Failed for the following commits* :x:\n\n$COMMIT_MESSAGES\nBranch : $BRANCH_NAME\nTriggered by: @$GITHUB_USERNAME\"
+                }
+              }
+            ]
+          }"
+
+          curl -X POST -H 'Content-type: application/json' --data "$MESSAGE" "$SLACK_WEBHOOK_URL"
+

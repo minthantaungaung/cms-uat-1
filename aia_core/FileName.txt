@@ -1,0 +1,9 @@
+ alter table ClaimTran
+ add
+CausedByCode nvarchar(max) null,
+DiagnosisCode nvarchar(max) null,
+HospitalCode nvarchar(max) null,
+LocationCode nvarchar(max) null,
+BankNameEn nvarchar(max) null,
+BankNameMm nvarchar(max) null,
+DoctorId nvarchar(max) null;

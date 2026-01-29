@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/aia_core/bin/Debug/net7.0
+/aia_core/obj
+/cms_api/bin/Debug/net7.0
+/cms_api/bin/Debug/net8.0
+/cms_api/obj
+/mobile_api/bin/Debug/net7.0
+/mobile_api/obj
+/.vs/*
+
+/Test/bin/Debug/net7.0
+/Test/obj
+
+**/bin/
+**/obj/
+

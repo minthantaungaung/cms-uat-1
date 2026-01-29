@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "cms_api\\cms_api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "aia_core\\aia_core.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

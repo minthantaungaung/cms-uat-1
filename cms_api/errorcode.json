@@ -1,0 +1,70 @@
+{
+  "E0": {
+    "code": 0,
+    "message": "Success"
+  },
+  "E201": {
+    "code": 201,
+    "message": "Name already exist."
+  },
+  "E202": {
+    "code": 202,
+    "message": "Code already exist."
+  },
+  "E203": {
+    "code": 203,
+    "message": "Bank Name already exist."
+  },
+  "E204": {
+    "code": 204,
+    "message": "Bank Code already exist."
+  },
+  "E205": {
+    "code": 205,
+    "message": "Policy number doesn't exist."
+  },
+  "E206": {
+    "code": 206,
+    "message": "Claim status doesn't exist."
+  },
+  "E207": {
+    "code": 207,
+    "message": "Claim id doesn't exist."
+  },
+  "E208": {
+    "code": 208,
+    "message": "servicing id doesn't exist."
+  },
+  "E400": {
+    "code": 400,
+    "message": "Invalid Request"
+  },
+  "E401": {
+    "code": 401,
+    "message": "Your login session has expired."
+  },
+  "E402": {
+    "code": 402,
+    "message": "Invalid email or password."
+  },
+  "E403": {
+    "code": 403,
+    "message": "Please verify policy status or contact your policyholder to submit service/claim requests."
+  },
+  "E404": {
+    "code": 404,
+    "message": "There is no data to show"
+  },
+  "E500": {
+    "code": 500,
+    "message": "An error has occurred. Please try again."
+  },
+  "E501": {
+    "code": 501,
+    "message": "Email not found in CMS Staff."
+  },
+  "E502": {
+    "code": 502,
+    "message": "Invalid signature."
+  }
+}

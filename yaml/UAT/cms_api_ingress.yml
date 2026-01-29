@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cms-api-ingress
+  namespace: nsp-mm-u-aiaplus01 
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+spec:
+  ingressClassName: nginx-ingress-controller #nginx-u-aiaplus01
+  tls:
+   - hosts:
+       - uat.aia.com.mm
+  rules:
+     - host: uat.aia.com.mm
+       http:
+        paths:
+          - path: /aiaplus/cms-api(/|$)(.*) # Replace with your desired route prefix
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: aia-cms-api # Replace with the name of your backend service
+                port:
+                  number: 80 # Replace with the port number of your backend service

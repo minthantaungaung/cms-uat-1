@@ -1,0 +1,7 @@
+﻿-- Convert Burmese to NVARCHAR(MAX) to support Unicode/Myanmar script
+ALTER TABLE [Localization]
+ALTER COLUMN [Burmese] NVARCHAR(MAX) NULL;
+
+-- Convert English to VARCHAR(MAX) (Standard ASCII)
+ALTER TABLE [Localization]
+ALTER COLUMN [English] VARCHAR(MAX) NULL;

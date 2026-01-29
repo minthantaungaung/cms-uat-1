@@ -1,0 +1,75 @@
+﻿{
+  "ClaimPushMsg_RC": {
+    "title": "AIA",
+    "message": "Your claim request {0} has been received."
+  },
+  "ClaimPushMsg_AL": {
+    "title": "AIA",
+    "message": "Your claim request {0} has been approved."
+  },
+  "ClaimPushMsg_FU": {
+    "title": "AIA",
+    "message": "Your claim request {0} has been followed-up."
+  },
+  "ClaimPushMsg_CS": {
+    "title": "AIA",
+    "message": "Your claim request {0} has been closed."
+  },
+  "ClaimPushMsg_WD": {
+    "title": "AIA",
+    "message": "Your claim request {0} has been withdrawn."
+  },
+  "ClaimPushMsg_RJ": {
+    "title": "AIA",
+    "message": "Sorry! Your claim request {0} has not been approved."
+  },
+  "ClaimPushMsg_PD": {
+    "title": "AIA",
+    "message": "Your claim request {0} has been paid."
+  },
+  "PasswordChange": {
+    "title": "AIA",
+    "message": "Your password has been changed successfully."
+  },
+  "Alert": {
+    "title": "AIA",
+    "message": "alert message."
+  },
+  "Product": {
+    "title": "AIA",
+    "message": "A new product has been launched. Explore the benefits, insurances available and so much more."
+  },
+  "Promotion": {
+    "title": "AIA",
+    "message": "{0}"
+  },
+  "Activity": {
+    "title": "AIA",
+    "message": "{0}"
+  },
+  "Proposition": {
+    "title": "AIA",
+    "message": "A new member proposition is out now for you! go and explore the new benefits."
+  },
+  "UpcomingPremiums": {
+    "title": "AIA",
+    "message": "{0} MMK premium for policy {1} is {2}"
+  },
+  "Servicing_NotApproved": {
+    "title": "AIA",
+    "message": "Sorry! Your {0} request {1} has not been approved."
+  },
+  "Servicing_Received": {
+    "title": "AIA",
+    "message": "Your {0} request {1} has been received."
+  },
+  "Servicing_Approved": {
+    "title": "AIA",
+    "message": "Good News! Your {0} request {1} has been approved. Please check your email for detail."
+  },
+  "Servicing_Paid": {
+    "title": "AIA",
+    "message": "Your request for {0} – {1} has been Paid."
+  }
+
+}
